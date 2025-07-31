@@ -2,6 +2,7 @@
 
 import React, { useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
+import { MutableRefObject } from "react";
 
 interface BackgroundAnimationProps {
   enabled?: boolean;
@@ -17,7 +18,7 @@ export const BackgroundAnimation: React.FC<BackgroundAnimationProps> = ({
   className = ''
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const timelineRef = useRef<gsap.core.Timeline>(null);
+  const timelineRef = useRef<gsap.core.Timeline>(null) as MutableRefObject<gsap.core.Timeline | null>;;
 
   useEffect(() => {
     if (!enabled || !containerRef.current) return;
