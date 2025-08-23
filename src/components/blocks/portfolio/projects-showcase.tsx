@@ -30,12 +30,12 @@ export const ProjectsShowcase = () => {
       githubUrl: "https://github.com/sandy4242/DataBase"
     },
     {
-      title: "Social Media Analytics Backend",
-      description: "A backend service for social media analytics, built with Python and PostgreSQL.",
-      technologies: ["Python", "PostgreSQL", "Faker", "psycopg2"],
-      image: "/placeholder-project-4.jpg",
+      title: "Anonn Bloging Platform",
+      description: "A anonymous blogging platform where users can share their thoughts without revealing their identity.",
+      technologies: ["Next.js", "Tailwind CSS", "Vanta.js", "Supabase", "Three.js"],
+      image: "/public/WhatsApp Image 2025-08-23 at 21.59.05_46ca1d01.jpg",
       liveUrl: "https://ui-library-docs.com",
-      githubUrl: "https://github.com/sandy4242/Social-Media-Analytics-Backend"
+      githubUrl: "https://github.com/sandy4242/anon_blog"
     }
   ];
 
