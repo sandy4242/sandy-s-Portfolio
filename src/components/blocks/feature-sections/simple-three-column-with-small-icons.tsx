@@ -1,42 +1,52 @@
-import { User, Code, Target } from 'lucide-react'
+"use client";
+
+import { Code, Terminal, User } from "lucide-react";
+import { motion } from "framer-motion";
 
 const features = [
   {
-    name: 'Me',
-    description:
-      'A CSE undergrad Student who is just a bit curious about everything related to technology and everything. I have learnt a lot of things in my journey so far and I am still learning. First started with HTML, CSS and JS and then I started exploring React and Next.js, but eventually I finding my interest in Flutter and Dart. Now contributing to open source projects and again still learning...',
+    name: "Curious Builder",
+    description: "CSE undergrad exploring the full product path: interface, application logic, data, and deployment.",
     icon: User,
   },
-]
+  {
+    name: "Readable Code",
+    description: "I like practical systems that are simple to reason about, easy to extend, and clear for the next developer.",
+    icon: Code,
+  },
+  {
+    name: "Current Focus",
+    description: "Modern web apps with Next.js and Tailwind, plus native-feeling mobile flows with Flutter and Dart.",
+    icon: Terminal,
+  },
+];
 
-export default function SimpleThreeColumnWithGlassCards() {
+export default function SimpleThreeColumnWithSmallIcons() {
   return (
-    <section id="about" className="min-h-screen py-24 px-6 sm:py-32 text-black ">
-      <div className="max-w-7xl mx-auto">
-        <div className="max-w-2xl mx-auto text-center">
-          <h2 className="text-sm font-semibold text-emerald-400">Get to know me</h2>
-          <p className="mt-2 text-4xl font-bold tracking-tight sm:text-5xl">About Me</p>
-          <p className="mt-6 text-lg text-black">
-            A passionate software engineer who believes great code is not just functional, but readable, maintainable, and impactful.
-          </p>
+    <div className="section-inner">
+      <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
+        <div>
+          <p className="eyebrow">About</p>
+          <h2 className="section-title">Small details, solid systems.</h2>
         </div>
 
-        <div className="mt-20 gap-8 mx-auto center ">
-          {features.map((feature) => (
-            <div
+        <div className="grid gap-4 sm:grid-cols-3">
+          {features.map((feature, index) => (
+            <motion.div
               key={feature.name}
-              className="flex flex-col bg-white/5 backdrop-blur-sm p-6 border border-white/20 shadow-md rounded-xl transition-transform hover:scale-105 bg-gradient-to-br from-[#10B981]/20 to-[#10B981]/5 
-             mx-auto min-h-[250px] max-w-2xl w-full"
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.08 }}
+              className="minimal-card p-5"
             >
-              <dt className="flex items-center gap-x-3 text-lg font-semibold text-black mb-2 ">
-                <feature.icon className="size-5 text-emerald-400" />
-                {feature.name}
-              </dt>
-              <dd className="text-base sm:text-lg text-[#10B981] ">{feature.description}</dd>
-            </div>
+              <feature.icon className="h-5 w-5 text-primary" aria-hidden="true" />
+              <h3 className="mt-5 font-heading text-xl font-semibold text-foreground">{feature.name}</h3>
+              <p className="section-copy mt-3 text-sm">{feature.description}</p>
+            </motion.div>
           ))}
         </div>
       </div>
-    </section>
-  )
+    </div>
+  );
 }

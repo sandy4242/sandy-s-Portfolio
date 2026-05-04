@@ -1,17 +1,23 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { Mail, Menu, X } from "lucide-react";
+
+const navItems = [
+  { name: "About", href: "about" },
+  { name: "Path", href: "timeline" },
+  { name: "Projects", href: "projects" },
+  { name: "Skills", href: "skills" },
+  { name: "Resume", href: "resume" },
+];
 
 export const PortfolioNavbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-
+    const handleScroll = () => setScrolled(window.scrollY > 16);
+    handleScroll();
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -24,105 +30,68 @@ export const PortfolioNavbar = () => {
     }
   };
 
-  const navItems = [
-    { name: "About", href: "about" },
-    { name: "Projects", href: "projects" },
-    { name: "Skills", href: "skills" },
-    { name: "Resume", href: "resume" },
-  ];
-
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "bg-white/10 backdrop-blur-md shadow-md border-b border-white/20"
-          : "bg-white/5 backdrop-blur-sm"
+      className={`fixed inset-x-0 top-0 z-40 border-b transition ${
+        scrolled ? "border-border bg-background/88 backdrop-blur-xl" : "border-transparent bg-background/65 backdrop-blur"
       }`}
     >
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center py-4">
-          {/* Logo */}
-          <div className="flex items-center">
-            <button
-              onClick={() => scrollToSection("hero")}
-              className="text-xl font-bold text-black hover:text-[#10B981] transition duration-300 logo text"
-            >
-              Sandeep
-            </button>
-          </div>
+      <div className="section-inner">
+        <div className="flex h-16 items-center justify-between">
+          <button
+            onClick={() => scrollToSection("home")}
+            className="font-heading text-lg font-semibold text-foreground"
+          >
+            Sandeep Sarkar
+          </button>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-2">
+          <div className="hidden items-center gap-1 md:flex">
             {navItems.map((item) => (
               <button
                 key={item.name}
                 onClick={() => scrollToSection(item.href)}
-                className="px-4 py-2 text-black skill-badge px-3 py-1 text-sm bg-gray-100 text-gray-700 rounded-full"
+                className="rounded-md px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-secondary hover:text-foreground"
               >
                 {item.name}
               </button>
             ))}
-
             <button
               onClick={() => scrollToSection("contact")}
-              className="ml-4 bg-[#10B981] text-white px-6 py-2 rounded-full transition-all duration-300 transform hover:scale-105 hover:bg-[#10B981]shadow-md"
+              className="ml-2 inline-flex items-center gap-2 rounded-md border border-primary bg-primary px-3.5 py-2 text-sm font-semibold text-primary-foreground hover:opacity-90"
             >
-              Contact Me
+              <Mail size={16} />
+              Contact
             </button>
           </div>
 
-          {/* Mobile menu button */}
-          <div className="md:hidden">
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="text-black hover:text-[#10B981] transition duration-200"
-            >
-              {isOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
-          </div>
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="control-button md:hidden"
+            aria-label="Toggle navigation"
+          >
+            {isOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
         </div>
 
-        {/* Mobile Navigation */}
-        <div
-          className={`md:hidden overflow-hidden transition-all duration-500 ease-in-out ${
-            isOpen
-              ? "max-h-[500px] opacity-100 scale-100"
-              : "max-h-0 opacity-0 scale-95"
-          }`}
-        >
-          <div className="mx-auto px-4 pt-2 pb-4 space-y-2 bg-white/10 backdrop-blur-lg rounded-lg shadow-lg border border-white/20">
+        {isOpen && (
+          <div className="grid gap-1 border-t border-border py-3 md:hidden">
             {navItems.map((item) => (
               <button
                 key={item.name}
-                onClick={() => {
-                  scrollToSection(item.href);
-                  setIsOpen(false); // close menu after click
-                }}
-                className="block w-full text-left px-4 py-2 text-black hover:text-[#10B981] hover:bg-white/10 rounded-lg transition-all"
+                onClick={() => scrollToSection(item.href)}
+                className="rounded-md px-2 py-2 text-left text-sm font-medium text-muted-foreground hover:bg-secondary hover:text-foreground"
               >
-
                 {item.name}
-                <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              viewBox="0 0 24 24"
-            >
-            </svg>
-              </button>          
+              </button>
             ))}
             <button
-              onClick={() => {
-                scrollToSection("contact");
-                setIsOpen(false); 
-              }}
-              className="w-full px-6 py-3 mt-2 text-white bg-[#10B981] hover:bg-[#10B981] transition rounded-full shadow-md hover:scale-105"
+              onClick={() => scrollToSection("contact")}
+              className="mt-1 rounded-md bg-primary px-3 py-2 text-left text-sm font-semibold text-primary-foreground"
             >
-              Contact Me
+              Contact
             </button>
           </div>
-        </div>
+        )}
       </div>
     </nav>
   );

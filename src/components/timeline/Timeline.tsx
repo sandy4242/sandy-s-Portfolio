@@ -1,103 +1,83 @@
 "use client";
+
 import { motion } from "framer-motion";
-import { fadeUpVariant } from "@/lib/animationVariants";
 
 const experiences = [
-    {
+  {
     role: "Intern - SQL Developer",
     company: "Elevate Labs",
     year: "2025",
-    description: "Worked on Database Management and SQL & PostgreSQL queries.",
+    description: "Worked on database management and optimized SQL and PostgreSQL queries for better performance.",
     skills: ["MySQL", "PostgreSQL", "Git"],
   },
   {
     role: "Flutter Bootcamp",
     company: "Udemy",
     year: "2025",
-    description: "Developed Apps using Flutter and Dart.",
-    skills: ["Flutter", "Dart", "Firebase","OOP", "State Management"],
+    description: "Built mobile applications using Flutter and Dart with a focus on state management.",
+    skills: ["Flutter", "Dart", "Firebase"],
   },
-  
   {
-    role: "Data Science Bootcamp" ,
+    role: "Data Science Bootcamp",
     company: "GeeksforGeeks",
     year: "2025",
-    description: "Learned Data Science concepts and applied them in projects.",
-    skills: ["Python","Data Science", "Machine Learning","Pandas", "NumPy", "Matplotlib","NLP","Web Scraping","Image Processing"],
+    description: "Practiced data science concepts through hands-on work with NLP and web scraping.",
+    skills: ["Python", "Machine Learning", "Pandas"],
   },
   {
-    role: "Data Structures and Algorithms using C",
+    role: "Data Structures & Algorithms",
     company: "Self Learning",
     year: "2024",
-    description: "Learned Data Structures and Algorithms using C.",
-    skills: ["Data Structures", "Algorithms", "C"],
+    description: "Solved logic problems with C and C++ while strengthening core data structures.",
+    skills: ["Data Structures", "Algorithms", "C++"],
   },
   {
-    role: "Oops using C++",
-    company: "Self Learning",
-    year: "2024",
-    description: "Learned Object-Oriented Programming concepts using C++.",
-    skills: ["Object-Oriented Programming", "C++"],
-  },
-  
-  {
-    role: "Student",
+    role: "Frontend Development",
     company: "Self Learning",
     year: "2023",
-    description: "Learned HTML, CSS, JS and started exploring React.",
-    skills: ["HTML", "CSS", "JavaScript"],
+    description: "Started with HTML, CSS, and JavaScript, then moved into React interfaces.",
+    skills: ["HTML", "CSS", "JavaScript", "React"],
   },
 ];
 
 export default function Timeline() {
   return (
-    <section id="timeline" className="min-h-screen flex items-center justify-center text-center ">
-      <div className="max-w-5xl mx-auto">
-        <motion.h2
-          className="text-3xl font-bold mb-12 text-center text-slate-800 dark:text-white "
-          variants={fadeUpVariant}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-        >
-          My Journey
-        </motion.h2>
+    <div className="section-inner">
+      <div className="grid gap-10 lg:grid-cols-[0.78fr_1.22fr]">
+        <div>
+          <p className="eyebrow">Path</p>
+          <h2 className="section-title">Experience and learning.</h2>
+          <p className="section-copy mt-5">A compact view of the work, courses, and self-learning that shaped my current stack.</p>
+        </div>
 
-        <div className="relative border-l border-gray-300 dark:border-gray-700 ml-4 space-y-12  ">
+        <div className="divide-y divide-border border-y border-border">
           {experiences.map((exp, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.2 }}
-              viewport={{ once: true }}
-              className="pl-6 relative"
+            <motion.article
+              key={`${exp.role}-${exp.company}`}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.06 }}
+              viewport={{ once: true, margin: "-80px" }}
+              className="grid gap-4 py-6 sm:grid-cols-[5rem_1fr]"
             >
-              {/* Timeline dot */}
-              <div className="absolute w-3 h-3 [#10B981] rounded-full left-[-7px] top-2" />
-              
-              <h3 className="text-xl font-semibold text-[#10B981]">
-                {exp.role} @ {exp.company}
-              </h3>
-              <span className="text-sm text-gray-500 dark:text-gray-400">
-                {exp.year}
-              </span>
-              <p className="mt-2 text-slate-700 dark:text-slate-300">{exp.description}</p>
-
-              <div className="flex flex-wrap gap-2 mt-3 grid-cols-2 gap-2 mt-3 w-full max-w-md">
-                {exp.skills.map((skill, i) => (
-                  <span
-                    key={i}
-                    className="text-xs px-3 py-1 bg-[#10B981] dark:bg-indigo-800 text-black dark:text-black px-4 py-2 skill-badge text-sm rounded-full shadow-emerald-glow"
-                  >
-                    {skill}
-                  </span>
-                ))}
+              <p className="text-sm font-bold text-primary">{exp.year}</p>
+              <div>
+                <h3 className="font-heading text-xl font-semibold text-foreground">
+                  {exp.role} <span className="text-muted-foreground">@ {exp.company}</span>
+                </h3>
+                <p className="section-copy mt-2 text-sm">{exp.description}</p>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {exp.skills.map((skill) => (
+                    <span key={skill} className="rounded-md border border-border bg-secondary px-2 py-1 text-xs font-semibold text-secondary-foreground">
+                      {skill}
+                    </span>
+                  ))}
+                </div>
               </div>
-            </motion.div>
+            </motion.article>
           ))}
         </div>
       </div>
-    </section>
+    </div>
   );
 }

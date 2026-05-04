@@ -1,32 +1,37 @@
-import { Download } from 'lucide-react'
+import { Download, Linkedin } from "lucide-react";
 
 export default function SimpleCentered() {
-    return (
-      <div className="">
-        <div className="px-6 py-24 sm:px-6 sm:py-32 lg:px-8">
-          <div className="mx-auto max-w-2xl text-center">
-            <div className="flex items-center justify-center gap-2 mb-6">
-              <Download className="w-5 h-5 text-emerald-600" />
-              <h2 className="text-4xl font-semibold tracking-tight text-balance text-charcoal sm:text-5xl">
-                Resume & Experience
-              </h2>
-            </div>
-            <p className="mx-auto mt-6 max-w-xl text-lg/8 text-pretty text-neutral-600">
-              Download my full resume to learn more about my professional experience and technical background.
-            </p>
-            <div className="mt-10 flex items-center justify-center gap-x-6">
-              <a
-                href="#"
-                className="skill-badge px-3 py-1 text-sm bg-green-300 text-black ml-4 bg-[#10B981]  px-6 py-2 rounded-full transition-all duration-300 transform hover:scale-105 hover:bg-[#10B981] shadow-md"
-              >
-                Download Resume
-              </a>
-              <a href="https://www.linkedin.com/in/sandeep-sarkar-cse/" className="text-sm/6 font-semibold text-charcoal">
-                View LinkedIn Profile <span aria-hidden="true">→</span>
-              </a>
-            </div>
-          </div>
+  return (
+    <div className="section-inner">
+      <div className="minimal-card grid gap-8 p-6 md:grid-cols-[1fr_auto] md:items-center md:p-8">
+        <div>
+          <p className="eyebrow">Resume</p>
+          <h2 className="mt-3 font-heading text-3xl font-bold text-foreground sm:text-4xl">
+            Want the full version?
+          </h2>
+          <p className="section-copy mt-4 max-w-2xl">
+            Download my resume or visit LinkedIn for a closer look at my technical background, coursework, and experience.
+          </p>
+        </div>
+        <div className="flex flex-wrap gap-3">
+          <a
+            href="#"
+            className="inline-flex items-center gap-2 rounded-md bg-primary px-4 py-3 text-sm font-bold text-primary-foreground hover:opacity-90"
+          >
+            <Download size={16} />
+            Download
+          </a>
+          <a
+            href="https://www.linkedin.com/in/sandeep-sarkar-cse/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 rounded-md border border-border px-4 py-3 text-sm font-bold text-foreground hover:border-primary"
+          >
+            <Linkedin size={16} />
+            LinkedIn
+          </a>
         </div>
       </div>
-    )
-  }
+    </div>
+  );
+}
