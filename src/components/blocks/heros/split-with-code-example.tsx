@@ -7,7 +7,7 @@ import { TypeAnimation } from "react-type-animation";
 const stats = [
   ["04", "featured projects"],
   ["08+", "core technologies"],
-  ["2025", "SQL developer intern"],
+  ["2026", "Flutter developer intern"],
 ];
 
 export default function SplitWithCodeExample() {
@@ -35,9 +35,9 @@ export default function SplitWithCodeExample() {
             sequence={[
               "Full Stack Developer",
               1800,
-              "Flutter App Developer",
+              "Flutter Developer",
               1800,
-              "JavaScript Developer",
+              "Rust Developer",
               1800,
               "UI-focused Builder",
               1800,
@@ -49,7 +49,7 @@ export default function SplitWithCodeExample() {
         </div>
 
         <p className="section-copy mt-6 max-w-2xl text-lg">
-          I build clean web and mobile experiences with Next.js, Flutter, Python, and database systems. My focus is simple interfaces, useful products, and code that stays understandable after the first launch.
+          I build clean web and mobile experiences with Next.js, Flutter, and database systems. My focus is simple interfaces, useful products, and code that stays understandable after the first launch.
         </p>
 
         <div className="mt-9 flex flex-wrap items-center gap-3">

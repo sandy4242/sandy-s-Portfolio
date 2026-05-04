@@ -9,7 +9,7 @@ const experiences = [
     company: "myRide",
     type: "Part-time",
     period: "Apr 2026 - Present",
-    location: "Remote",
+    location: "Boston - Remote",
     description: "Building and maintaining product features across the application stack.",
     skills: ["Full Stack", "Product Development", "Remote"],
     kind: "work",
