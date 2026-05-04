@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Outfit, Plus_Jakarta_Sans } from "next/font/google";
+import { RouteTransitionLoader } from "@/components/route-transition-loader";
 import "./globals.css";
 
 const outfit = Outfit({
@@ -29,7 +30,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${outfit.variable} ${jakarta.variable}`}>
-      <body className="bg-background font-sans text-foreground antialiased">{children}</body>
+      <body className="bg-background font-sans text-foreground antialiased">
+        {children}
+        <RouteTransitionLoader />
+      </body>
     </html>
   );
 }

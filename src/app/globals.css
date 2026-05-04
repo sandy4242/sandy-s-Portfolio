@@ -33,7 +33,36 @@
 :root {
   --accent: #10b981;
   --section-y: 7rem;
+  --season-sky: #e8f6f0;
+  --season-haze: #f8fff9;
+  --season-ground: #dff3e4;
+  --season-cloud: #ffffff;
+  --season-particle: #ffffff;
   color-scheme: light;
+}
+
+:root[data-season="summer"] {
+  --season-sky: #fff2cf;
+  --season-haze: #fff8e7;
+  --season-ground: #fde68a;
+  --season-cloud: #fff7d6;
+  --season-particle: #f59e0b;
+}
+
+:root[data-season="rain"] {
+  --season-sky: #c7d2fe;
+  --season-haze: #e0f2fe;
+  --season-ground: #93c5fd;
+  --season-cloud: #94a3b8;
+  --season-particle: #2563eb;
+}
+
+:root[data-season="winter"] {
+  --season-sky: #dff6ff;
+  --season-haze: #f7fbff;
+  --season-ground: #bae6fd;
+  --season-cloud: #f8fafc;
+  --season-particle: #ffffff;
 }
 
 :root.dark {
@@ -51,7 +80,30 @@
   --color-accent-foreground: #f6f4ee;
   --color-border: #30302d;
   --color-input: #30302d;
+  --season-sky: #17211c;
+  --season-haze: #111111;
+  --season-ground: #1d2b24;
+  --season-cloud: #26362f;
+  --season-particle: #bbf7d0;
   color-scheme: dark;
+}
+
+:root.dark[data-season="summer"] {
+  --season-sky: #2b2111;
+  --season-ground: #3a2d13;
+  --season-cloud: #3b3017;
+}
+
+:root.dark[data-season="rain"] {
+  --season-sky: #111a2a;
+  --season-ground: #17243a;
+  --season-cloud: #26354c;
+}
+
+:root.dark[data-season="winter"] {
+  --season-sky: #101e27;
+  --season-ground: #142c3a;
+  --season-cloud: #233240;
 }
 
 :root[data-density="compact"] {
@@ -71,6 +123,8 @@
   body {
     min-height: 100vh;
     background:
+      radial-gradient(circle at 85% 12%, color-mix(in srgb, var(--season-ground) 42%, transparent), transparent 22rem),
+      linear-gradient(180deg, color-mix(in srgb, var(--season-sky) 72%, transparent), transparent 24rem),
       linear-gradient(90deg, color-mix(in srgb, var(--color-border) 34%, transparent) 1px, transparent 1px),
       linear-gradient(color-mix(in srgb, var(--color-border) 30%, transparent) 1px, transparent 1px),
       var(--color-background);
@@ -158,6 +212,46 @@
     color: var(--color-foreground);
   }
 
+  .season-button {
+    display: inline-flex;
+    height: 2rem;
+    width: 2rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.45rem;
+    color: var(--season-color);
+  }
+
+  .season-button:hover,
+  .season-button-active {
+    background: color-mix(in srgb, var(--season-color) 14%, transparent);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--season-color) 30%, transparent);
+  }
+
+  .dock-button {
+    display: inline-flex;
+    height: 2.75rem;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    border-radius: 0.65rem;
+    padding-inline: 0.75rem;
+    color: var(--color-muted-foreground);
+  }
+
+  .dock-button:hover {
+    background: var(--color-secondary);
+    color: var(--color-foreground);
+    transform: translateY(-2px);
+  }
+
+  .dock-button-active {
+    background: var(--color-secondary);
+    color: var(--color-primary);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-primary) 24%, transparent);
+  }
+
   .accent-link {
     color: var(--color-primary);
     font-weight: 700;
@@ -165,5 +259,542 @@
 
   .accent-link:hover {
     color: color-mix(in srgb, var(--color-primary) 78%, var(--color-foreground));
+  }
+
+  .timeline-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in srgb, var(--color-primary) 42%, transparent) transparent;
+  }
+
+  .timeline-scroll::-webkit-scrollbar {
+    height: 0.55rem;
+  }
+
+  .timeline-scroll::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .timeline-scroll::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--color-primary) 34%, var(--color-border));
+  }
+
+  .hacktober-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+  }
+
+  .hacktober-badge {
+    position: relative;
+    min-height: 9.5rem;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    border-radius: 0.75rem;
+    background:
+      radial-gradient(circle at 18% 18%, color-mix(in srgb, var(--badge-color) 28%, transparent), transparent 4rem),
+      #101018;
+    padding: 0.7rem;
+    color: #fff;
+  }
+
+  .hacktober-badge::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(90deg, rgb(255 255 255 / 0.05) 1px, transparent 1px),
+      linear-gradient(rgb(255 255 255 / 0.05) 1px, transparent 1px);
+    background-size: 14px 14px;
+    mask-image: linear-gradient(180deg, black, transparent);
+  }
+
+  .hacktober-badge-screen {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    min-height: 5.7rem;
+    place-items: center;
+    border: 2px solid color-mix(in srgb, var(--badge-color) 68%, #ffffff);
+    border-radius: 0.55rem;
+    background: color-mix(in srgb, var(--badge-color) 18%, #080812);
+    box-shadow: inset 0 0 30px color-mix(in srgb, var(--badge-color) 22%, transparent);
+  }
+
+  .hacktober-badge-screen span {
+    position: absolute;
+    right: 0.45rem;
+    top: 0.45rem;
+    height: 1.15rem;
+    width: 2.2rem;
+    border-radius: 999px;
+    border: 1px solid color-mix(in srgb, var(--badge-color) 72%, #ffffff);
+    background: color-mix(in srgb, var(--badge-color) 28%, transparent);
+  }
+
+  .hacktober-badge p {
+    position: relative;
+    z-index: 1;
+    margin-top: 0.65rem;
+    font-size: 0.9rem;
+    font-weight: 900;
+  }
+
+  .hacktober-badge small {
+    position: relative;
+    z-index: 1;
+    color: rgb(255 255 255 / 0.7);
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+  }
+
+  .hacktober-violet {
+    --badge-color: #8b5cf6;
+  }
+
+  .hacktober-indigo {
+    --badge-color: #6366f1;
+  }
+
+  .hacktober-blue {
+    --badge-color: #38bdf8;
+  }
+
+  .hacktober-gold {
+    --badge-color: #facc15;
+  }
+
+  .hacktober-orange {
+    --badge-color: #fb923c;
+  }
+
+  .hacktober-green {
+    --badge-color: #22c55e;
+  }
+}
+
+.route-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(circle at 50% 42%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 16rem),
+    color-mix(in srgb, var(--color-background) 78%, transparent);
+  opacity: 0;
+  pointer-events: none;
+  backdrop-filter: blur(0);
+  transition: opacity 240ms ease, backdrop-filter 240ms ease;
+}
+
+.route-loader-visible {
+  opacity: 1;
+  pointer-events: auto;
+  backdrop-filter: blur(10px);
+}
+
+.route-loader-panel {
+  display: grid;
+  place-items: center;
+  gap: 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: 0.9rem;
+  background: color-mix(in srgb, var(--color-card) 88%, transparent);
+  padding: 1.4rem 1.6rem;
+  box-shadow: 0 24px 70px rgb(0 0 0 / 0.14);
+  transform: translateY(0.5rem) scale(0.98);
+  transition: transform 240ms ease;
+}
+
+.route-loader-visible .route-loader-panel {
+  transform: translateY(0) scale(1);
+}
+
+.route-loader-panel p {
+  color: var(--color-muted-foreground);
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.walker-stage {
+  position: relative;
+  height: 4.5rem;
+  width: min(16rem, 68vw);
+  overflow: hidden;
+}
+
+.walker-path {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0.55rem;
+  height: 2px;
+  border-radius: 999px;
+  background:
+    repeating-linear-gradient(90deg, color-mix(in srgb, var(--accent) 58%, transparent) 0 18px, transparent 18px 32px),
+    color-mix(in srgb, var(--color-border) 72%, transparent);
+}
+
+.walker {
+  position: absolute;
+  left: -2.5rem;
+  bottom: 0.72rem;
+  height: 3.2rem;
+  width: 2rem;
+  animation: walker-travel 1.65s ease-in-out infinite;
+}
+
+.walker-head {
+  position: absolute;
+  left: 0.55rem;
+  top: 0;
+  height: 0.92rem;
+  width: 0.92rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent) 68%, #ffffff);
+  box-shadow: inset -0.12rem -0.08rem 0 color-mix(in srgb, #000000 12%, transparent);
+}
+
+.walker-body {
+  position: absolute;
+  left: 0.8rem;
+  top: 0.9rem;
+  height: 1.45rem;
+  width: 0.48rem;
+  border-radius: 999px;
+  background: var(--accent);
+}
+
+.walker-arm,
+.walker-leg {
+  position: absolute;
+  left: 0.88rem;
+  width: 0.25rem;
+  border-radius: 999px;
+  background: var(--color-foreground);
+  transform-origin: top center;
+}
+
+.walker-arm {
+  top: 1.08rem;
+  height: 1.12rem;
+}
+
+.walker-leg {
+  top: 2.15rem;
+  height: 1.05rem;
+}
+
+.walker-arm-left,
+.walker-leg-right {
+  animation: walker-limb-a 0.52s ease-in-out infinite alternate;
+}
+
+.walker-arm-right,
+.walker-leg-left {
+  animation: walker-limb-b 0.52s ease-in-out infinite alternate;
+}
+
+.walker-arm-left,
+.walker-arm-right {
+  background: color-mix(in srgb, var(--accent) 42%, var(--color-foreground));
+}
+
+@keyframes walker-travel {
+  0% {
+    translate: 0 0;
+  }
+  50% {
+    translate: calc(min(16rem, 68vw) - 1.5rem) -0.08rem;
+  }
+  100% {
+    translate: 0 0;
+  }
+}
+
+@keyframes walker-limb-a {
+  from {
+    rotate: 32deg;
+  }
+  to {
+    rotate: -34deg;
+  }
+}
+
+@keyframes walker-limb-b {
+  from {
+    rotate: -34deg;
+  }
+  to {
+    rotate: 32deg;
+  }
+}
+
+.seasonal-background {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 400ms ease;
+}
+
+.seasonal-background-ready {
+  opacity: 1;
+}
+
+.seasonal-background::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 76% 18%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 16rem),
+    linear-gradient(180deg, color-mix(in srgb, var(--season-haze) 78%, transparent), transparent 48%),
+    radial-gradient(circle at 14% 22%, color-mix(in srgb, var(--season-ground) 40%, transparent), transparent 18rem);
+  opacity: 0.8;
+}
+
+.seasonal-background::after {
+  content: "";
+  position: absolute;
+  inset: auto -10vw -12vh -10vw;
+  height: 28vh;
+  background:
+    radial-gradient(ellipse at 22% 100%, color-mix(in srgb, var(--season-ground) 76%, transparent), transparent 58%),
+    radial-gradient(ellipse at 72% 100%, color-mix(in srgb, var(--season-ground) 62%, transparent), transparent 62%);
+  opacity: 0;
+}
+
+:root[data-season="spring"] .seasonal-background::after {
+  opacity: 0.38;
+}
+
+:root[data-season="winter"] .seasonal-background::after {
+  opacity: 0.42;
+  background:
+    radial-gradient(ellipse at 28% 100%, color-mix(in srgb, #ffffff 56%, transparent), transparent 58%),
+    radial-gradient(ellipse at 78% 100%, color-mix(in srgb, #bae6fd 44%, transparent), transparent 62%);
+}
+
+:root[data-season="rain"] .seasonal-background::after {
+  opacity: 0.26;
+  background: linear-gradient(180deg, transparent, color-mix(in srgb, #1d4ed8 18%, transparent));
+}
+
+.spring-hills {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: 34vh;
+  opacity: 0;
+  background:
+    radial-gradient(ellipse at 16% 100%, color-mix(in srgb, #86efac 54%, transparent), transparent 58%),
+    radial-gradient(ellipse at 82% 100%, color-mix(in srgb, #bbf7d0 58%, transparent), transparent 60%);
+}
+
+:root[data-season="spring"] .spring-hills {
+  opacity: 0.42;
+}
+
+.season-sun {
+  position: absolute;
+  right: clamp(2rem, 8vw, 7rem);
+  top: clamp(5rem, 12vw, 8rem);
+  height: 4.5rem;
+  width: 4.5rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent) 72%, #ffffff);
+  box-shadow: 0 0 0 18px color-mix(in srgb, var(--accent) 12%, transparent);
+  opacity: 0;
+  transform: scale(0.82);
+  transition: opacity 400ms ease, transform 400ms ease;
+}
+
+:root[data-season="summer"] .season-sun {
+  opacity: 0.62;
+  transform: scale(1);
+}
+
+.season-cloud {
+  position: absolute;
+  display: none;
+  width: clamp(8rem, 17vw, 15rem);
+  height: clamp(2.5rem, 5vw, 4.5rem);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--season-cloud) 78%, transparent);
+  filter: blur(0.4px);
+  opacity: 0.5;
+}
+
+.season-cloud::before,
+.season-cloud::after {
+  content: "";
+  position: absolute;
+  bottom: 0.7rem;
+  border-radius: 999px;
+  background: inherit;
+}
+
+.season-cloud::before {
+  left: 14%;
+  width: 38%;
+  height: 160%;
+}
+
+.season-cloud::after {
+  right: 18%;
+  width: 44%;
+  height: 130%;
+}
+
+.season-cloud-one {
+  left: 7vw;
+  top: 14vh;
+  animation: cloud-drift 28s ease-in-out infinite alternate;
+}
+
+.season-cloud-two {
+  right: 12vw;
+  top: 34vh;
+  scale: 0.72;
+  animation: cloud-drift 34s ease-in-out infinite alternate-reverse;
+}
+
+:root[data-season="spring"] .season-cloud,
+:root[data-season="rain"] .season-cloud,
+:root[data-season="winter"] .season-cloud {
+  display: block;
+}
+
+:root[data-season="rain"] .season-cloud {
+  opacity: 0.64;
+}
+
+:root[data-season="winter"] .season-cloud {
+  opacity: 0.46;
+}
+
+.season-particles span {
+  position: absolute;
+  left: calc((var(--i) * 1.72%) - 5%);
+  top: -3rem;
+  display: none;
+  animation: seasonal-fall linear infinite;
+  animation-delay: calc(var(--i) * -0.28s);
+  animation-duration: calc(6.5s + (var(--i) * 0.08s));
+}
+
+:root[data-season="winter"] .season-particles span {
+  display: block;
+  height: calc(0.28rem + (var(--i) % 4) * 0.08rem);
+  width: calc(0.28rem + (var(--i) % 4) * 0.08rem);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--season-particle) 88%, var(--accent));
+  box-shadow: 0 0 10px rgb(255 255 255 / 0.38);
+  opacity: 0.8;
+  animation-name: seasonal-snow;
+  animation-duration: calc(8s + (var(--i) * 0.11s));
+}
+
+:root[data-season="rain"] .season-particles span {
+  display: block;
+  height: calc(1.75rem + (var(--i) % 5) * 0.28rem);
+  width: 2px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, transparent, color-mix(in srgb, var(--season-particle) 68%, #ffffff));
+  opacity: 0.68;
+  transform: rotate(14deg);
+  animation-name: seasonal-rain;
+  animation-duration: calc(1.15s + (var(--i) * 0.012s));
+}
+
+:root[data-season="rain"] .season-particles span::after {
+  content: "";
+  position: absolute;
+  left: -0.2rem;
+  bottom: -0.34rem;
+  height: 0.18rem;
+  width: 0.6rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--season-particle) 54%, transparent);
+  opacity: 0.48;
+}
+
+:root[data-season="spring"] .season-particles span {
+  display: block;
+  height: calc(0.5rem + (var(--i) % 3) * 0.1rem);
+  width: calc(0.32rem + (var(--i) % 3) * 0.07rem);
+  border-radius: 999px 0 999px 999px;
+  background: color-mix(in srgb, var(--accent) 48%, #ffffff);
+  opacity: 0.62;
+  animation-name: seasonal-petals;
+  animation-duration: calc(8s + (var(--i) * 0.1s));
+}
+
+@keyframes seasonal-fall {
+  0% {
+    translate: 0 -8vh;
+    rotate: 0deg;
+  }
+  100% {
+    translate: calc((var(--i) - 10) * 0.22rem) 112vh;
+    rotate: 210deg;
+  }
+}
+
+@keyframes seasonal-rain {
+  0% {
+    translate: 0 -16vh;
+    opacity: 0;
+  }
+  12% {
+    opacity: 0.72;
+  }
+  100% {
+    translate: -6vw 112vh;
+    opacity: 0.28;
+  }
+}
+
+@keyframes seasonal-snow {
+  0% {
+    translate: 0 -10vh;
+    rotate: 0deg;
+  }
+  100% {
+    translate: calc((var(--i) - 28) * 0.18rem) 112vh;
+    rotate: 160deg;
+  }
+}
+
+@keyframes seasonal-petals {
+  0% {
+    translate: 0 -12vh;
+    rotate: 0deg;
+  }
+  50% {
+    translate: calc((var(--i) - 24) * 0.12rem) 48vh;
+  }
+  100% {
+    translate: calc((var(--i) - 30) * -0.18rem) 112vh;
+    rotate: 260deg;
+  }
+}
+
+@keyframes cloud-drift {
+  0% {
+    translate: -1rem 0;
+  }
+  100% {
+    translate: 1.5rem 0.5rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .season-particles span:nth-child(n + 43) {
+    display: none;
   }
 }

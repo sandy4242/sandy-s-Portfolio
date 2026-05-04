@@ -9,14 +9,16 @@ import Timeline from "@/components/timeline/Timeline";
 import Skills from "@/components/skills/Skills";
 import ScrollSpy from "@/components/blocks/ScrollSpy/ScrollSpy";
 import { VisualPreferences } from "@/components/visual-preferences";
+import { SeasonalBackground } from "@/components/seasonal-background";
 
 export default function Home() {
   return (
     <>
+      <SeasonalBackground />
       <ScrollSpy/>
       <VisualPreferences />
       <PortfolioNavbar />
-      <main id="top" className="min-h-screen relative pt-16">
+      <main id="top" className="min-h-screen relative z-10 pb-32">
         <section id="home" className="section-shell">
           <SplitWithCodeExample />
         </section>
