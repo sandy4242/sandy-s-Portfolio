@@ -82,7 +82,7 @@ export default function SplitWithCodeExample() {
           <p className="text-sm font-semibold text-muted-foreground">Current stack</p>
         </div>
         <div className="grid divide-y divide-border">
-          {["Next.js + Tailwind", "Flutter + Dart", "FastAPI + Python", "MySQL + PostgreSQL"].map((item) => (
+          {["Next.js + Tailwind", "Flutter + Dart", "FastAPI + RestAPI", "MySQL + PostgreSQL"].map((item) => (
             <div key={item} className="flex items-center justify-between px-5 py-4">
               <span className="font-medium text-foreground">{item}</span>
               <span className="h-2 w-2 rounded-full bg-primary" />
