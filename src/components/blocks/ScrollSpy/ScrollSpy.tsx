@@ -1,53 +1,48 @@
 "use client";
+
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
-const SECTIONS = ["home", "about","timeline", "projects", "skills" ,"resume","contact"];
+const sections = ["home", "about", "timeline", "projects", "skills", "resume", "contact"];
 
 export default function ScrollSpy() {
-  const [activeId, setActiveId] = useState("hero");
+  const [activeId, setActiveId] = useState("home");
 
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY + window.innerHeight / 3;
 
-      for (const id of SECTIONS) {
+      for (const id of sections) {
         const section = document.getElementById(id);
-        if (section) {
-          const { offsetTop, offsetHeight } = section;
-          if (
-            scrollPosition >= offsetTop &&
-            scrollPosition < offsetTop + offsetHeight
-          ) {
-            setActiveId(id);
-            break;
-          }
+        if (!section) continue;
+
+        const { offsetTop, offsetHeight } = section;
+        if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+          setActiveId(id);
+          break;
         }
       }
     };
 
     window.addEventListener("scroll", handleScroll);
-    handleScroll(); // Initial check
+    handleScroll();
 
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const scrollTo = (id: string) => {
-    const el = document.getElementById(id);
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth" });
-    }
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
-    <div className="fixed top-1/2 right-5 transform -translate-y-1/2 z-50 hidden md:flex flex-col space-y-4">
-      {SECTIONS.map((id) =>
+    <div className="fixed right-5 top-1/2 z-40 hidden -translate-y-1/2 flex-col gap-3 md:flex">
+      {sections.map((id) =>
         activeId === id ? (
           <motion.button
             key={id}
             onClick={() => scrollTo(id)}
-            className="w-4 h-4 rounded-full bg-[#10B981] shadow-md"
-            animate={{ scale: [1, 1.3, 1], boxShadow: "0 0 10px black" }}
+            className="h-3 w-3 rounded-full bg-primary"
+            animate={{ scale: [1, 1.25, 1] }}
             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
             aria-label={`Scroll to ${id}`}
           />
@@ -55,7 +50,7 @@ export default function ScrollSpy() {
           <button
             key={id}
             onClick={() => scrollTo(id)}
-            className="w-3 h-3 rounded-full bg-gray-400 opacity-50 hover:opacity-100 transition-all"
+            className="h-2.5 w-2.5 rounded-full bg-muted-foreground/40 hover:bg-primary"
             aria-label={`Scroll to ${id}`}
           />
         )
