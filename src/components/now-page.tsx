@@ -121,6 +121,7 @@ export function NowPage() {
       }
     }
 
+    //update
     loadBook();
 
     return () => {
